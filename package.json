@@ -1,0 +1,28 @@
+{
+  "name": "health_simples",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:cafesao/health_simples.git",
+  "author": "cafesao <my@cafesao.net>",
+  "license": "MIT",
+  "scripts": {
+    "compile": "yarn tsc --build --force",
+    "start": "node index.js",
+    "dev": "nodemon"
+  },
+  "dependencies": {
+    "@prisma/client": "^4.0.0",
+    "@types/express": "^4.17.13",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "nodemon": "^2.0.19",
+    "prisma": "^4.0.0",
+    "ts-node": "^10.8.2"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.12",
+    "@types/node": "^18.0.1",
+    "typescript": "^4.7.4"
+  }
+}

@@ -1,0 +1,49 @@
+version: '3.1'
+
+services:
+  db:
+    image: postgres
+    container_name: ${CONTAINER_DB}
+    restart: always
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: users
+    ports:
+      - 5432:5432
+    volumes:
+      - db_users:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -d users -U admin" ]
+      interval: 10s
+      timeout: 60s
+      retries: 5
+      start_period: 5s
+
+  migrate:
+    image: node:18-alpine
+    container_name: migrate
+    command: npx prisma migrate dev --name init
+    volumes:
+      - ../prisma:/prisma
+      - ../.env:/prisma/.env
+    depends_on:
+      db:
+        condition: service_healthy
+
+  api:
+    build:
+      context: ../.
+      dockerfile: Docker/Dockerfile
+    container_name: ${CONTAINER_API}
+    ports:
+      - ${PORT}:${PORT}
+    restart: always
+    depends_on:
+      db:
+        condition: service_healthy
+      migrate:
+        condition: service_completed_successfully
+
+volumes:
+  db_users:
