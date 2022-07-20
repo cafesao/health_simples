@@ -23,6 +23,6 @@ COPY --from=base /base/prisma ./prisma
 
 RUN yarn install --production
 
-RUN npx prisma generate 
+RUN yarn prisma generate 
 
 CMD [ "yarn","start" ]

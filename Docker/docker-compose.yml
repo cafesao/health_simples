@@ -23,7 +23,7 @@ services:
   migrate:
     image: node:18-alpine
     container_name: migrate
-    command: npx prisma migrate dev --name init
+    command: npx prisma migrate deploy
     volumes:
       - ../prisma:/prisma
       - ../.env:/prisma/.env
